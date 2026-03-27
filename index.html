@@ -1,1 +1,251 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Message pour Johanna</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
+    body {
+      min-height: 100vh;
+      background: #e0e5ec;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Segoe UI', 'Poppins', 'Inter', system-ui, sans-serif;
+      padding: 1.5rem;
+    }
+
+    .neumorphic-card {
+      background: #e0e5ec;
+      border-radius: 64px;
+      box-shadow: 20px 20px 35px rgba(166, 180, 200, 0.6),
+                  -12px -12px 25px rgba(255, 255, 255, 0.7);
+      padding: 2rem 2.2rem;
+      max-width: 700px;
+      width: 100%;
+    }
+
+    .message-container {
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .initial-message {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #2c3e4e;
+      background: #e0e5ec;
+      padding: 1.8rem;
+      border-radius: 48px;
+      box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.4),
+                  -6px -6px 12px rgba(255, 255, 255, 0.6);
+      line-height: 1.4;
+    }
+
+    .final-phrase {
+      font-size: 2.2rem;
+      font-weight: 600;
+      color: #2c3e4e;
+      background: #e0e5ec;
+      padding: 1.8rem;
+      border-radius: 48px;
+      box-shadow: inset 6px 6px 12px rgba(166, 180, 200, 0.4),
+                  inset -6px -6px 12px rgba(255, 255, 255, 0.6);
+      animation: softAppear 0.5s ease-out;
+      margin-bottom: 1.5rem;
+    }
+
+    @keyframes softAppear {
+      0% {
+        opacity: 0;
+        transform: scale(0.96) translateY(8px);
+      }
+      100% {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .whatsapp-btn {
+      background: #e0e5ec;
+      border: none;
+      padding: 1rem 2rem;
+      font-size: 1.2rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: #075e54;
+      cursor: pointer;
+      box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.5),
+                  -6px -6px 12px rgba(255, 255, 255, 0.7);
+      font-family: inherit;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      text-decoration: none;
+      width: auto;
+      min-width: 200px;
+      margin-top: 1rem;
+      animation: softAppear 0.5s ease-out;
+    }
+
+    .whatsapp-btn:active {
+      box-shadow: inset 5px 5px 12px rgba(166, 180, 200, 0.5),
+                  inset -3px -3px 8px rgba(255, 255, 255, 0.6);
+      transform: scale(0.97);
+    }
+
+    .compris-btn {
+      background: #e0e5ec;
+      border: none;
+      padding: 1rem 2.2rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      border-radius: 60px;
+      color: #2c3e4e;
+      cursor: pointer;
+      box-shadow: 8px 8px 16px rgba(166, 180, 200, 0.5),
+                  -6px -6px 12px rgba(255, 255, 255, 0.7);
+      font-family: inherit;
+      min-width: 200px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .compris-btn:active {
+      box-shadow: inset 5px 5px 12px rgba(166, 180, 200, 0.5),
+                  inset -3px -3px 8px rgba(255, 255, 255, 0.6);
+      transform: scale(0.97);
+    }
+
+    .button-wrapper {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .footer-note {
+      margin-top: 2rem;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #7c8b9c;
+      opacity: 0.7;
+    }
+
+    @media (max-width: 550px) {
+      .neumorphic-card {
+        padding: 1.5rem;
+        border-radius: 48px;
+      }
+      .initial-message {
+        font-size: 1.3rem;
+        padding: 1.2rem;
+      }
+      .final-phrase {
+        font-size: 1.8rem;
+        padding: 1.2rem;
+      }
+      .compris-btn {
+        font-size: 1.2rem;
+        padding: 0.8rem 1.8rem;
+        min-width: 170px;
+        color: green;
+      }
+      .whatsapp-btn {
+        font-size: 1rem;
+        padding: 0.8rem 1.5rem;
+        min-width: 170px;
+      }
+      .footer-note{
+          color: green;
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="neumorphic-card">
+  <div class="message-container" id="messageContainer">
+    <div id="dynamicContent">
+      <div class="initial-message">
+        apprend à être tolérante et à ne pas rendre le mal par le mal stp johana
+      </div>
+    </div>
+  </div>
+  
+  <div class="button-wrapper" id="buttonWrapper">
+    <button class="compris-btn" id="comprisBtn">
+      J'ai compris
+    </button>
+  </div>
+  <div class="footer-note">
+    Merci d'appuyer sur le bouton 👆
+  </div>
+</div>
+
+<script>
+  (function() {
+    const FINAL_PHRASE = "JOHANNA♡ ça te va??";
+    const WHATSAPP_NUMBER = "2250503588336";
+    const WHATSAPP_LINK = "https://wa.me/" + WHATSAPP_NUMBER;
+    
+    const comprisBtn = document.getElementById('comprisBtn');
+    const dynamicContainer = document.getElementById('dynamicContent');
+    const buttonWrapper = document.getElementById('buttonWrapper');
+    
+    let alreadyClicked = false;
+    
+    function displayFinalContent() {
+      dynamicContainer.innerHTML = '';
+      
+      const finalDiv = document.createElement('div');
+      finalDiv.className = 'final-phrase';
+      finalDiv.textContent = FINAL_PHRASE;
+      dynamicContainer.appendChild(finalDiv);
+      
+      const whatsappLink = document.createElement('a');
+      whatsappLink.href = WHATSAPP_LINK;
+      whatsappLink.target = "_blank";
+      whatsappLink.rel = "noopener noreferrer";
+      whatsappLink.className = 'whatsapp-btn';
+      whatsappLink.textContent = 'Oui Ivan';
+      
+      buttonWrapper.innerHTML = '';
+      buttonWrapper.appendChild(whatsappLink);
+    }
+    
+    function onUnderstandClick() {
+      if (alreadyClicked) return;
+      displayFinalContent();
+      alreadyClicked = true;
+    }
+    
+    comprisBtn.addEventListener('click', onUnderstandClick);
+    
+    comprisBtn.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        onUnderstandClick();
+      }
+    });
+  })();
+</script>
+</body>
+  </html>
