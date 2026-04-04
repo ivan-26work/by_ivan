@@ -141,19 +141,23 @@
 
   // Enregistrer External ID sur OneSignal
   async function registerOneSignalUser(userId) {
-    try {
-      const OneSignal = window.OneSignalDeferred;
-      if (!OneSignal) return false;
-      const os = await OneSignal;
-      await os.login(userId);
-      const externalId = await os.getExternalUserId();
-      console.log('External ID set:', externalId);
-      return externalId === userId;
-    } catch (err) {
-      console.error('OneSignal login error:', err);
-      return false;
-    }
+  try {
+    const OneSignal = window.OneSignalDeferred;
+    if (!OneSignal) return false;
+    const os = await OneSignal;
+    
+    // Méthode alternative
+    os.setExternalUserId(userId);
+    
+    // Vérifier
+    const externalId = await os.getExternalUserId();
+    console.log('External ID set:', externalId);
+    return externalId === userId;
+  } catch (err) {
+    console.error('OneSignal error:', err);
+    return false;
   }
+}
 
   // Connexion
   document.getElementById('loginBtn').onclick = async () => {
