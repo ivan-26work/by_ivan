@@ -21,7 +21,6 @@
       padding: 20px;
     }
 
-    /* Conteneur principal */
     .app-container {
       max-width: 500px;
       width: 100%;
@@ -33,7 +32,6 @@
       border: 1px solid rgba(255,255,255,0.2);
     }
 
-    /* Carte de connexion */
     .login-card {
       background: white;
       border-radius: 28px;
@@ -71,7 +69,6 @@
       margin-bottom: 28px;
     }
 
-    /* Champs */
     .input-group {
       margin-bottom: 20px;
       text-align: left;
@@ -132,7 +129,6 @@
       display: none;
     }
 
-    /* Contenu principal (caché au début) */
     .main-content {
       display: none;
       background: white;
@@ -286,19 +282,22 @@
   const errorMsgDiv = document.getElementById('errorMsg');
 
   // ============================================================
-  // NOTIFICATION ONESIGNAL
+  // NOTIFICATION ONESIGNAL (AUTOMATIQUE)
   // ============================================================
   async function sendOneSignalNotification(title, body) {
     try {
       const OneSignal = window.OneSignalDeferred;
       if (OneSignal) {
-        const onesignal = await OneSignal;
-        onesignal.sendSelfNotification(title, body, window.location.href, {
-          icon: './images/icon.png',
+        const os = await OneSignal;
+        os.sendSelfNotification(title, body, window.location.href, {
+          icon: "./images/icon.png"
         });
+        console.log('Notification OneSignal envoyée:', title);
+      } else {
+        console.warn('OneSignal non disponible');
       }
     } catch (err) {
-      console.warn('OneSignal error:', err);
+      console.error('Erreur OneSignal:', err);
     }
   }
 
@@ -339,13 +338,11 @@
       if (m === '<') return '&lt;';
       if (m === '>') return '&gt;';
       return m;
-    }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function(c) {
-      return c;
     });
   }
 
   // ============================================================
-  // CHARGER MESSAGES + REALTIME
+  // CHARGER MESSAGES + REALTIME AVEC NOTIFICATION
   // ============================================================
   async function loadMessages() {
     if (!currentUserId) return;
@@ -381,10 +378,12 @@
         if (newMsg) {
           messagesList.unshift(newMsg);
           renderMessages();
-          // Envoi d'une notification OneSignal
+          
+          // 🔔 ENVOI NOTIFICATION AUTOMATIQUE VIA ONESIGNAL
+          const shortContent = newMsg.content?.substring(0, 60) || 'Vous avez reçu un message';
           await sendOneSignalNotification(
-            'Nouveau message anonyme',
-            newMsg.content?.substring(0, 60) || 'Vous avez reçu un message'
+            '📩 Nouveau message anonyme',
+            shortContent + (newMsg.content?.length > 60 ? '…' : '')
           );
         }
       })
@@ -406,20 +405,19 @@
       currentUser = data.user;
       currentUserId = currentUser.email.split('@')[0];
 
-      // Afficher le contenu principal
       loginCard.style.display = 'none';
       mainContent.style.display = 'block';
       userDisplaySpan.textContent = `@${currentUserId}`;
 
-      // Charger les messages
       await loadMessages();
       subscribeToRealtime();
 
       // Enregistrer l'utilisateur sur OneSignal
       const OneSignal = window.OneSignalDeferred;
       if (OneSignal) {
-        const onesignal = await OneSignal;
-        onesignal.login(currentUserId);
+        const os = await OneSignal;
+        os.login(currentUserId);
+        console.log('OneSignal: utilisateur enregistré', currentUserId);
       }
 
     } catch (err) {
@@ -445,11 +443,10 @@
     loginCard.style.display = 'block';
     mainContent.style.display = 'none';
     
-    // OneSignal logout
     const OneSignal = window.OneSignalDeferred;
     if (OneSignal) {
-      const onesignal = await OneSignal;
-      onesignal.logout();
+      const os = await OneSignal;
+      os.logout();
     }
   }
 
@@ -467,11 +464,10 @@
       await loadMessages();
       subscribeToRealtime();
 
-      // OneSignal login
       const OneSignal = window.OneSignalDeferred;
       if (OneSignal) {
-        const onesignal = await OneSignal;
-        onesignal.login(currentUserId);
+        const os = await OneSignal;
+        os.login(currentUserId);
       }
     }
   }
@@ -494,8 +490,6 @@
   });
 
   document.getElementById('logoutBtn').addEventListener('click', logout);
-
-  // Vérifier si déjà connecté
   checkExistingSession();
 </script>
 </body>
