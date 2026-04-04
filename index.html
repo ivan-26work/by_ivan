@@ -2,74 +2,217 @@
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ano23 - Test OneSignal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <title>Ano23 — Connexion</title>
   <style>
-    body {
-      font-family: system-ui, sans-serif;
-      background: linear-gradient(135deg, #0c4a6e, #0284c7);
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+    * {
       margin: 0;
-      padding: 20px;
-    }
-    .card {
-      background: white;
-      border-radius: 28px;
-      padding: 32px;
-      max-width: 400px;
-      width: 100%;
-      text-align: center;
-      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
-    }
-    .logo {
-      width: 60px;
-      height: 60px;
-      background: #0ea5e9;
-      border-radius: 18px;
-      margin: 0 auto 16px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 30px;
-    }
-    h1 { font-size: 24px; margin-bottom: 8px; color: #0f172a; }
-    .sub { color: #64748b; margin-bottom: 24px; font-size: 14px; }
-    input {
-      width: 100%;
-      padding: 14px;
-      border: 1px solid #e2e8f0;
-      border-radius: 20px;
-      margin-bottom: 12px;
-      font-size: 14px;
+      padding: 0;
       box-sizing: border-box;
     }
-    button {
+
+    body {
+      font-family: 'Segoe UI', 'DM Sans', system-ui, -apple-system, sans-serif;
+      background: linear-gradient(145deg, #0c4a6e 0%, #0284c7 100%);
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .app-container {
+      max-width: 500px;
+      width: 100%;
+      background: rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 36px;
+      padding: 24px;
+      box-shadow: 0 25px 45px rgba(0,0,0,0.2);
+      border: 1px solid rgba(255,255,255,0.2);
+    }
+
+    .login-card {
+      background: white;
+      border-radius: 28px;
+      padding: 32px 24px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+
+    .logo {
+      width: 64px;
+      height: 64px;
+      background: #0ea5e9;
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 16px;
+    }
+
+    .logo svg {
+      width: 36px;
+      height: 36px;
+    }
+
+    h1 {
+      font-size: 24px;
+      font-weight: 800;
+      color: #0f172a;
+      margin-bottom: 8px;
+    }
+
+    .sub {
+      color: #64748b;
+      font-size: 14px;
+      margin-bottom: 28px;
+    }
+
+    .input-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 6px;
+    }
+
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      border: 1.5px solid #e2e8f0;
+      border-radius: 20px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: all 0.2s;
+      background: #f8fafc;
+    }
+
+    input:focus {
+      outline: none;
+      border-color: #0ea5e9;
+      background: white;
+      box-shadow: 0 0 0 3px rgba(14,165,233,0.1);
+    }
+
+    .btn-login {
       width: 100%;
       padding: 14px;
-      background: #0ea5e9;
+      background: linear-gradient(135deg, #0ea5e9, #0284c7);
       color: white;
       border: none;
       border-radius: 40px;
-      font-weight: bold;
       font-size: 16px;
+      font-weight: 700;
       cursor: pointer;
+      transition: transform 0.15s, box-shadow 0.15s;
       margin-top: 8px;
     }
-    .status {
+
+    .btn-login:active {
+      transform: scale(0.97);
+    }
+
+    .error-msg {
+      background: #fee2e2;
+      color: #dc2626;
+      padding: 12px;
+      border-radius: 16px;
+      font-size: 13px;
+      font-weight: 500;
       margin-top: 16px;
-      padding: 10px;
-      border-radius: 12px;
-      font-size: 12px;
       display: none;
     }
-    .status.success { background: #d1fae5; color: #065f46; display: block; }
-    .status.error { background: #fee2e2; color: #991b1b; display: block; }
-    .status.info { background: #dbeafe; color: #1e40af; display: block; }
-    .hidden { display: none; }
+
+    .main-content {
+      display: none;
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+    }
+
+    .inbox-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e2e8f0;
+    }
+
+    .inbox-title {
+      font-size: 20px;
+      font-weight: 800;
+      color: #0f172a;
+    }
+
+    .message-list {
+      max-height: 500px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message-card {
+      background: #f1f5f9;
+      border-radius: 20px;
+      padding: 16px;
+      border-left: 4px solid #0ea5e9;
+    }
+
+    .message-content {
+      font-size: 14px;
+      font-weight: 600;
+      color: #1e293b;
+      margin-bottom: 6px;
+      word-break: break-word;
+    }
+
+    .message-time {
+      font-size: 11px;
+      color: #64748b;
+    }
+
+    .empty-state {
+      text-align: center;
+      padding: 40px;
+      color: #94a3b8;
+    }
+
+    .logout-btn {
+      background: #ef4444;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 40px;
+      color: white;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 13px;
+    }
+
+    .user-info {
+      font-size: 13px;
+      font-weight: 600;
+      color: #0ea5e9;
+    }
+
+    .status-badge {
+      display: inline-block;
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      margin-left: 8px;
+    }
+    .status-badge.online { background: #22c55e; box-shadow: 0 0 4px #22c55e; }
+    .status-badge.offline { background: #ef4444; }
   </style>
+
   <!-- OneSignal SDK -->
   <script src="https://cdn.onesignal.com/sdks/web/v16/OneSignalSDK.page.js" defer></script>
   <script>
@@ -80,123 +223,295 @@
       });
     });
   </script>
+
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 </head>
 <body>
-<div class="card">
-  <div class="logo">✉️</div>
-  <h1>Ano23 Test</h1>
-  <div class="sub">Test des notifications OneSignal</div>
 
-  <!-- Connexion -->
-  <div id="loginForm">
-    <input type="email" id="email" placeholder="Email" value="ipoteivan5@gmail.com">
-    <input type="password" id="password" placeholder="Mot de passe">
-    <button id="loginBtn">Se connecter</button>
+<div class="app-container">
+  <!-- Carte de connexion -->
+  <div id="loginCard" class="login-card">
+    <div class="logo">
+      <svg viewBox="0 0 28 28" fill="none">
+        <circle cx="14" cy="14" r="11" fill="#0ea5e9"/>
+        <ellipse cx="10" cy="13" rx="2.5" ry="3" fill="white"/>
+        <ellipse cx="18" cy="13" rx="2.5" ry="3" fill="white"/>
+        <path d="M10 18.5 Q14 21 18 18.5" stroke="white" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+      </svg>
+    </div>
+    <h1>Ano23</h1>
+    <div class="sub">Connectez-vous à votre compte anonyme</div>
+
+    <div class="input-group">
+      <label>Email</label>
+      <input type="email" id="loginEmail" placeholder="vous@exemple.com">
+    </div>
+    <div class="input-group">
+      <label>Mot de passe</label>
+      <input type="password" id="loginPassword" placeholder="••••••••">
+    </div>
+    <button class="btn-login" id="btnLogin">Se connecter →</button>
+    <div id="errorMsg" class="error-msg"></div>
   </div>
 
-  <!-- Zone test (après connexion) -->
-  <div id="testZone" style="display:none">
-    <div id="userInfo" style="background:#f1f5f9; border-radius:16px; padding:12px; margin-bottom:16px"></div>
-    <button id="testNotifBtn">🔔 Tester notification manuelle</button>
-    <div id="status" class="status"></div>
+  <!-- Contenu principal après connexion -->
+  <div id="mainContent" class="main-content">
+    <div class="inbox-header">
+      <span class="inbox-title">📥 Messages reçus</span>
+      <div style="display: flex; gap: 12px; align-items: center;">
+        <span id="userDisplay" class="user-info"></span>
+        <span id="notifStatus" class="status-badge offline" title="Notifications OneSignal"></span>
+        <button id="logoutBtn" class="logout-btn">Déconnexion</button>
+      </div>
+    </div>
+    <div id="messageList" class="message-list">
+      <div class="empty-state">Chargement des messages...</div>
+    </div>
   </div>
 </div>
 
 <script>
-  // Supabase
+  // ============================================================
+  // CONFIGURATION SUPABASE
+  // ============================================================
   const SUPABASE_URL = 'https://waogbrxqyysibttlpoxj.supabase.co';
   const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Indhb2dicnhxeXlzaWJ0dGxwb3hqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzUxNjE3NzUsImV4cCI6MjA5MDczNzc3NX0.Op1DUBfefbO2RkoitXws-7cFLW1T0DJGBDh1YPDcB1w';
   const sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-  let currentUserId = null;
+  // ============================================================
+  // CONFIGURATION ONESIGNAL PRO (API REST)
+  // ============================================================
+  const ONESIGNAL_APP_ID = '5bc6ebfb-bed3-46b7-a9be-0f269a24006b';
+  const ONESIGNAL_API_KEY = 'os_v2_org_5j4ilebu6vhjjixqy335ho66rjlcufnhmqwu55ekwviqmiop65kmzd5zeq5fwrzrokiwpd3ukr3f5nja54rmvfl7wuuszygwuazdlka';
 
-  function showStatus(msg, type) {
-    const el = document.getElementById('status');
-    el.textContent = msg;
-    el.className = `status ${type}`;
-  }
-
-  // Envoyer notification OneSignal
-  async function sendTestNotification() {
-    showStatus('Envoi de la notification...', 'info');
+  // Envoyer une notification via API REST (fonctionne même app fermée)
+  async function sendProNotification(userId, title, message) {
     try {
-      const OneSignal = window.OneSignalDeferred;
-      if (!OneSignal) {
-        showStatus('OneSignal non disponible', 'error');
-        return;
-      }
-      const os = await OneSignal;
-      os.sendSelfNotification(
-        "Test Ano23",
-        "Ceci est une notification de test ! ✅",
-        window.location.href,
-        { icon: "./images/icon.png" }
-      );
-      showStatus('Notification envoyée ! Vérifiez votre écran.', 'success');
+      const response = await fetch('https://onesignal.com/api/v1/notifications', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Basic ${ONESIGNAL_API_KEY}`
+        },
+        body: JSON.stringify({
+          app_id: ONESIGNAL_APP_ID,
+          contents: { en: message },
+          headings: { en: title },
+          include_external_user_ids: [userId],
+          channel_for_external_user_ids: "push",
+          priority: 10,
+          ttl: 86400
+        })
+      });
+      
+      const data = await response.json();
+      console.log('Notification OneSignal envoyée:', data);
+      return data;
     } catch (err) {
-      showStatus('Erreur: ' + err.message, 'error');
+      console.error('Erreur envoi notification:', err);
     }
   }
 
-  // Enregistrer External ID sur OneSignal
-  async function registerOneSignalUser(userId) {
-  try {
-    const OneSignal = window.OneSignalDeferred;
-    if (!OneSignal) return false;
-    const os = await OneSignal;
-    
-    // Méthode alternative
-    os.setExternalUserId(userId);
-    
-    // Vérifier
-    const externalId = await os.getExternalUserId();
-    console.log('External ID set:', externalId);
-    return externalId === userId;
-  } catch (err) {
-    console.error('OneSignal error:', err);
-    return false;
-  }
-}
+  // ============================================================
+  // ÉTAT GLOBAL
+  // ============================================================
+  let currentUser = null;
+  let currentUserId = null;
+  let messagesList = [];
+  let realtimeChannel = null;
 
-  // Connexion
-  document.getElementById('loginBtn').onclick = async () => {
-    const email = document.getElementById('email').value.trim();
-    const password = document.getElementById('password').value;
+  // ============================================================
+  // ÉLÉMENTS DOM
+  // ============================================================
+  const loginCard = document.getElementById('loginCard');
+  const mainContent = document.getElementById('mainContent');
+  const messageListDiv = document.getElementById('messageList');
+  const userDisplaySpan = document.getElementById('userDisplay');
+  const errorMsgDiv = document.getElementById('errorMsg');
+  const notifStatusSpan = document.getElementById('notifStatus');
+
+  // ============================================================
+  // AFFICHER LES MESSAGES
+  // ============================================================
+  function renderMessages() {
+    if (!messageListDiv) return;
     
+    if (messagesList.length === 0) {
+      messageListDiv.innerHTML = '<div class="empty-state">📭 Aucun message reçu</div>';
+      return;
+    }
+
+    messageListDiv.innerHTML = messagesList.map(msg => `
+      <div class="message-card">
+        <div class="message-content">${escapeHtml(msg.content || 'Message vide')}</div>
+        <div class="message-time">${formatDate(msg.created_at)}</div>
+      </div>
+    `).join('');
+  }
+
+  function formatDate(dateStr) {
+    if (!dateStr) return 'Date inconnue';
+    const date = new Date(dateStr);
+    const now = new Date();
+    const diff = now - date;
+    if (diff < 60000) return 'À l\'instant';
+    if (diff < 3600000) return `Il y a ${Math.floor(diff/60000)} min`;
+    if (diff < 86400000) return `Il y a ${Math.floor(diff/3600000)}h`;
+    return date.toLocaleDateString('fr-FR');
+  }
+
+  function escapeHtml(str) {
+    if (!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  // ============================================================
+  // CHARGER MESSAGES + REALTIME AVEC NOTIFICATION PRO
+  // ============================================================
+  async function loadMessages() {
+    if (!currentUserId) return;
+    try {
+      const { data, error } = await sb
+        .from('messages')
+        .select('*')
+        .eq('user_id', currentUserId)
+        .order('created_at', { ascending: false });
+      
+      if (error) throw error;
+      messagesList = data || [];
+      renderMessages();
+    } catch (err) {
+      console.error('Erreur chargement messages:', err);
+    }
+  }
+
+  function subscribeToRealtime() {
+    if (realtimeChannel) {
+      sb.removeChannel(realtimeChannel);
+    }
+
+    realtimeChannel = sb
+      .channel(`messages-${currentUserId}`)
+      .on('postgres_changes', {
+        event: 'INSERT',
+        schema: 'public',
+        table: 'messages',
+        filter: `user_id=eq.${currentUserId}`
+      }, async (payload) => {
+        const newMsg = payload.new;
+        if (newMsg) {
+          messagesList.unshift(newMsg);
+          renderMessages();
+          
+          // 🔔 ENVOI NOTIFICATION PRO VIA API REST ONESIGNAL
+          const shortContent = newMsg.content?.substring(0, 60) || 'Vous avez reçu un message';
+          await sendProNotification(
+            currentUserId,
+            '📩 Nouveau message anonyme',
+            shortContent + (newMsg.content?.length > 60 ? '…' : '')
+          );
+        }
+      })
+      .subscribe();
+  }
+
+  // ============================================================
+  // CONNEXION
+  // ============================================================
+  async function login(email, password) {
+    try {
+      const { data, error } = await sb.auth.signInWithPassword({
+        email: email,
+        password: password
+      });
+
+      if (error) throw error;
+
+      currentUser = data.user;
+      currentUserId = currentUser.email.split('@')[0];
+
+      loginCard.style.display = 'none';
+      mainContent.style.display = 'block';
+      userDisplaySpan.textContent = `@${currentUserId}`;
+
+      // Mettre à jour le statut OneSignal
+      notifStatusSpan.className = 'status-badge online';
+      notifStatusSpan.title = 'OneSignal actif - Notifications push configurées';
+
+      await loadMessages();
+      subscribeToRealtime();
+
+      // Demander la permission de notification (si pas déjà faite)
+      if (Notification.permission === 'default') {
+        Notification.requestPermission();
+      }
+
+    } catch (err) {
+      errorMsgDiv.style.display = 'block';
+      errorMsgDiv.textContent = err.message || 'Erreur de connexion';
+      setTimeout(() => {
+        errorMsgDiv.style.display = 'none';
+      }, 3000);
+    }
+  }
+
+  // ============================================================
+  // DÉCONNEXION
+  // ============================================================
+  async function logout() {
+    await sb.auth.signOut();
+    if (realtimeChannel) {
+      sb.removeChannel(realtimeChannel);
+    }
+    currentUser = null;
+    currentUserId = null;
+    messagesList = [];
+    loginCard.style.display = 'block';
+    mainContent.style.display = 'none';
+  }
+
+  // ============================================================
+  // VÉRIFIER SESSION EXISTANTE
+  // ============================================================
+  async function checkExistingSession() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (session) {
+      currentUser = session.user;
+      currentUserId = currentUser.email.split('@')[0];
+      loginCard.style.display = 'none';
+      mainContent.style.display = 'block';
+      userDisplaySpan.textContent = `@${currentUserId}`;
+      notifStatusSpan.className = 'status-badge online';
+      notifStatusSpan.title = 'OneSignal actif - Notifications push configurées';
+      await loadMessages();
+      subscribeToRealtime();
+    }
+  }
+
+  // ============================================================
+  // INIT
+  // ============================================================
+  document.getElementById('btnLogin').addEventListener('click', () => {
+    const email = document.getElementById('loginEmail').value.trim();
+    const password = document.getElementById('loginPassword').value;
     if (!email || !password) {
-      showStatus('Veuillez remplir tous les champs', 'error');
+      errorMsgDiv.style.display = 'block';
+      errorMsgDiv.textContent = 'Veuillez remplir tous les champs';
+      setTimeout(() => {
+        errorMsgDiv.style.display = 'none';
+      }, 2000);
       return;
     }
+    login(email, password);
+  });
 
-    showStatus('Connexion en cours...', 'info');
-    
-    const { data, error } = await sb.auth.signInWithPassword({ email, password });
-    
-    if (error) {
-      showStatus('Erreur: ' + error.message, 'error');
-      return;
-    }
-    
-    currentUserId = data.user.email.split('@')[0];
-    
-    // Enregistrer sur OneSignal
-    const registered = await registerOneSignalUser(currentUserId);
-    
-    if (registered) {
-      showStatus(`✅ Connecté en tant que @${currentUserId} - OneSignal OK`, 'success');
-    } else {
-      showStatus(`⚠️ Connecté mais OneSignal non enregistré`, 'info');
-    }
-    
-    // Afficher zone test
-    document.getElementById('loginForm').style.display = 'none';
-    document.getElementById('testZone').style.display = 'block';
-    document.getElementById('userInfo').innerHTML = `👤 @${currentUserId}<br>📱 OneSignal: ${registered ? '✅ lié' : '❌ non lié'}`;
-  };
-
-  // Bouton test notification
-  document.getElementById('testNotifBtn').onclick = sendTestNotification;
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+  checkExistingSession();
 </script>
 </body>
 </html>
